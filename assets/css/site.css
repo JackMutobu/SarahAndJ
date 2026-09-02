@@ -1,6 +1,6 @@
 :root{
   --noir:#1B1B1B;--or:#C9A548;--champ:#DCC898;--ivoire:#F6F2EA;--cafe:#5A3A26;--gris:#9C9C9C;--blanc:#FFFDF9;--sable:#D5BE9A;
-  --nav-h:64px;--bas-h:62px;
+  --nav-h:64px;--bas-h:62px;--safe-bottom:env(safe-area-inset-bottom,0px);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden}
@@ -25,14 +25,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .lang{font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.1em;display:flex;border:1px solid var(--champ)}
 .lang button{font:inherit;background:none;border:0;padding:6px 9px;color:var(--gris);cursor:pointer}
 .lang button[aria-pressed=true]{background:var(--cafe);color:var(--blanc)}
-@media (max-width:820px){.nav ul{display:none} body{padding-bottom:var(--bas-h)}}
+@media (max-width:960px){.nav ul{display:none} body{padding-bottom:calc(var(--bas-h) + var(--safe-bottom))}}
 
 /* ---------- barre basse mobile ---------- */
-.bas{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bas-h);z-index:20;background:var(--blanc);border-top:1px solid var(--champ);padding-bottom:env(safe-area-inset-bottom)}
-.bas a,.bas button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.06em;color:var(--gris);background:none;border:0;cursor:pointer}
+.bas{display:none;position:fixed;bottom:0;left:0;right:0;height:calc(var(--bas-h) + var(--safe-bottom));z-index:20;background:var(--blanc);border-top:1px solid var(--champ);padding:0 env(safe-area-inset-right,0px) var(--safe-bottom) env(safe-area-inset-left,0px)}
+.bas a,.bas button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.06em;color:var(--gris);background:none;border:0;cursor:pointer}
 .bas a[aria-current=page]{color:var(--cafe)}
 .bas svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:820px){.bas{display:flex}}
+@media (max-width:960px){.bas{display:flex}}
 .feuille{position:fixed;inset:0;z-index:30;background:rgba(27,27,27,.5);display:none}
 .feuille.on{display:block}
 .feuille .panneau{position:absolute;left:0;right:0;bottom:0;background:var(--blanc);border-radius:18px 18px 0 0;padding:16px 20px calc(20px + env(safe-area-inset-bottom))}
@@ -40,9 +40,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .feuille .fermer{float:right;font:inherit;background:none;border:0;font-size:26px;color:var(--gris);cursor:pointer}
 
 /* ---------- bouton RSVP flottant ---------- */
-.flottant{position:fixed;right:18px;bottom:calc(var(--bas-h) + 14px);z-index:19;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.12em;text-decoration:none;background:var(--or);color:var(--noir);padding:13px 18px;border-radius:999px;box-shadow:0 8px 22px rgba(90,58,38,.25)}
+.flottant{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(var(--bas-h) + var(--safe-bottom) + 14px);z-index:19;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.12em;text-decoration:none;background:var(--or);color:var(--noir);padding:13px 18px;border-radius:999px;box-shadow:0 8px 22px rgba(90,58,38,.25)}
 .flottant.fait{background:var(--cafe);color:var(--blanc)}
-@media (min-width:821px){.flottant{bottom:22px}}
+@media (min-width:961px){.flottant{bottom:22px}}
 
 /* ---------- éléments communs ---------- */
 .colonne{max-width:1080px;margin:0 auto;padding:0 20px}
