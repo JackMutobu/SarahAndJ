@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr" data-racine="..">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programme — Sarah &amp; Jack, 19 décembre 2026</title>
+<meta name="description" content="Mariage de Sarah et Jack, Bunia, 19 décembre 2026. Pamoja daima.">
+<link rel="icon" href="../assets/images/logo/favicon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1B1B1B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script src="../assets/js/config.js"></script>
+<script src="../assets/data/translations.js"></script>
+<script src="../assets/data/familles.js"></script>
+<script src="../assets/data/faq.js"></script>
+</head>
+<body data-page="programme">
+<header class="nav">
+  <div class="in">
+    <a class="logo" href="../index.html"><img src="../assets/images/logo/sceau-cafe.svg" alt="Monogramme J et S"><b>Sarah &amp; Jack</b></a>
+    <nav aria-label="Navigation principale"><ul>
+      <li><a href="../index.html" data-nav="accueil" data-i18n="nav.accueil">Accueil</a></li>
+      <li><a href="../programme/index.html" data-nav="programme" data-i18n="nav.programme">Programme</a></li>
+      <li><a href="../familles/index.html" data-nav="familles" data-i18n="nav.familles">Nos familles</a></li>
+      <li><a href="../direct/index.html" data-nav="direct" data-i18n="nav.direct">En direct</a></li>
+      <li><a href="../invites/index.html" data-nav="invites" data-i18n="nav.invites">Espace invités</a></li>
+      <li><a href="../souvenirs/index.html" data-nav="souvenirs" data-i18n="nav.souvenirs">Souvenirs</a></li>
+    </ul></nav>
+    <div class="lang" role="group" aria-label="Langue"><button data-lang="fr" aria-pressed="true">FR</button><button data-lang="sw" aria-pressed="false">SW</button></div>
+  </div>
+</header>
+
+
+<section>
+  <div class="colonne">
+    <div class="orne"><h1 data-i18n="programme.titre">Le programme du 19 décembre</h1></div>
+    <p class="sous">UNE JOURNÉE, TROIS MOMENTS</p>
+    
+<article class="moment" id="civil">
+  <img src="../assets/images/couple/matin.jpg" alt="">
+  <div>
+    <p class="h">10 H 00 – 11 H 30</p>
+    <h2 data-i18n="moment.civil"></h2>
+    <p class="lieu">Mairie de Bunia</p>
+    <p>La journée s'ouvre dans la lumière : les mariés échangent leurs consentements devant l'officier d'état civil, en blanc tous les deux. Arrivée conseillée à 9 h 40.</p>
+    <div class="actions">
+      <a class="lien" href="#" data-carte="0" data-requiert="moments" data-i18n="programme.carte">Voir sur la carte</a>
+    </div>
+  </div>
+</article>
+    
+<article class="moment" id="eglise">
+  <img src="../assets/images/couple/journee.jpg" alt="">
+  <div>
+    <p class="h">14 H 30 – 16 H 30</p>
+    <h2 data-i18n="moment.eglise"></h2>
+    <p class="lieu att" data-i18n="programme.lieu.attente">Lieu à confirmer</p>
+    <p>La bénédiction de l'alliance, suivie de la sortie des mariés et des photos dans la lumière de l'après-midi. Arrivée conseillée à 14 h 10.</p>
+    <div class="actions">
+      <a class="lien" href="#" data-carte="1" data-requiert="moments" data-i18n="programme.carte">Voir sur la carte</a>
+    </div>
+  </div>
+</article>
+    
+<article class="moment noir" id="reception">
+  <img src="../assets/images/couple/soir.jpg" alt="">
+  <div>
+    <p class="h">19 H 00</p>
+    <h2 data-i18n="moment.reception"></h2>
+    <p class="lieu att" data-i18n="programme.lieu.attente">Lieu à confirmer</p>
+    <p>Dîner aux chandelles, gâteau, premières danses. Dress code noir et or ; le blanc est réservé à la mariée. Arrivée conseillée à 18 h 40.</p>
+    <div class="actions">
+      <a class="lien" href="#" data-carte="2" data-requiert="moments" data-i18n="programme.carte">Voir sur la carte</a>
+    </div>
+  </div>
+</article>
+    <p class="centre" style="margin-top:30px"><a class="lien" href="#" data-ics="tout" data-i18n="programme.agenda">Ajouter à mon agenda</a></p>
+  </div>
+</section>
+<script>
+document.querySelectorAll("[data-carte]").forEach(function(a){var m=window.SITE.moments[+a.getAttribute("data-carte")];if(m&&m.carte){a.href=m.carte;a.target="_blank";a.rel="noopener"}else a.classList.add("cache")});
+</script>
+
+
+<footer>
+  <img src="../assets/images/logo/sceau-or.svg" alt="">
+  <p class="devise" data-i18n="pied.devise">Stabilité &amp; sagesse</p>
+  <p class="sans">SARAH &amp; JACK — BUNIA, 19 DÉCEMBRE 2026</p>
+</footer>
+
+<a class="flottant" id="flottant" href="../invites/index.html#rsvp"><span data-i18n="rsvp.bouton">Confirmer ma présence</span></a>
+
+<nav class="bas" aria-label="Navigation mobile">
+  <a href="../index.html" data-nav="accueil"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></svg><span data-i18n="nav.accueil">Accueil</span></a>
+  <a href="../programme/index.html" data-nav="programme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="nav.programme">Programme</span></a>
+  <a href="../familles/index.html" data-nav="familles"><svg viewBox="0 0 24 24"><path d="M12 21V11M12 11c-4 0-6-3-6-6 3 0 6 2 6 6zm0 0c4 0 6-3 6-6-3 0-6 2-6 6zM6 21h12"/></svg><span>Familles</span></a>
+  <a href="../direct/index.html" data-nav="direct"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg><span>Direct</span></a>
+  <button data-ouvre-feuille><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span data-i18n="nav.plus">Plus</span></button>
+</nav>
+<div class="feuille" id="feuille"><div class="panneau">
+  <button class="fermer" data-ferme-feuille aria-label="Fermer">×</button>
+  <a href="../invites/index.html#rsvp">RSVP</a>
+  <a href="../invites/index.html#venir" data-i18n="invites.venir">Venir à Bunia</a>
+  <a href="../invites/index.html#tenues" data-i18n="invites.tenues">Tenues</a>
+  <a href="../invites/index.html#cadeaux" data-i18n="invites.cadeaux">Cadeaux</a>
+  <a href="../invites/index.html#table" data-i18n="invites.table">Ma table</a>
+  <a href="../invites/index.html#faq" data-i18n="invites.faq">Questions fréquentes</a>
+  <a href="../souvenirs/index.html" data-i18n="nav.souvenirs">Souvenirs</a>
+</div></div>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/pages.js"></script>
+</body>
+</html>

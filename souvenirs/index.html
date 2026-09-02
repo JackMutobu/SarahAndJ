@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" data-racine="..">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Souvenirs — Sarah &amp; Jack, 19 décembre 2026</title>
+<meta name="description" content="Mariage de Sarah et Jack, Bunia, 19 décembre 2026. Pamoja daima.">
+<link rel="icon" href="../assets/images/logo/favicon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1B1B1B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script src="../assets/js/config.js"></script>
+<script src="../assets/data/translations.js"></script>
+<script src="../assets/data/familles.js"></script>
+<script src="../assets/data/faq.js"></script>
+</head>
+<body data-page="souvenirs">
+<header class="nav">
+  <div class="in">
+    <a class="logo" href="../index.html"><img src="../assets/images/logo/sceau-cafe.svg" alt="Monogramme J et S"><b>Sarah &amp; Jack</b></a>
+    <nav aria-label="Navigation principale"><ul>
+      <li><a href="../index.html" data-nav="accueil" data-i18n="nav.accueil">Accueil</a></li>
+      <li><a href="../programme/index.html" data-nav="programme" data-i18n="nav.programme">Programme</a></li>
+      <li><a href="../familles/index.html" data-nav="familles" data-i18n="nav.familles">Nos familles</a></li>
+      <li><a href="../direct/index.html" data-nav="direct" data-i18n="nav.direct">En direct</a></li>
+      <li><a href="../invites/index.html" data-nav="invites" data-i18n="nav.invites">Espace invités</a></li>
+      <li><a href="../souvenirs/index.html" data-nav="souvenirs" data-i18n="nav.souvenirs">Souvenirs</a></li>
+    </ul></nav>
+    <div class="lang" role="group" aria-label="Langue"><button data-lang="fr" aria-pressed="true">FR</button><button data-lang="sw" aria-pressed="false">SW</button></div>
+  </div>
+</header>
+
+
+<section class="ivoire">
+  <div class="colonne">
+    <div class="orne"><h1 data-i18n="souvenirs.histoire">Notre histoire</h1></div>
+    <div class="ligne-temps">
+      <div class="etape"><h3>Notre rencontre</h3><p class="q">DATE À COMPLÉTER</p><p style="font-style:italic;color:var(--gris)">Quelques lignes sur le jour où tout a commencé.</p></div>
+      <div class="etape"><h3>Elle a dit oui</h3><p class="q">DATE À COMPLÉTER</p><p style="font-style:italic;color:var(--gris)">La demande, le lieu, la réaction de Sarah.</p></div>
+      <div class="etape"><h3>Le mariage coutumier</h3><p class="q">DATE À COMPLÉTER</p><p>Nos deux familles réunies, la dot, les tenues traditionnelles et les premières photos de nous en mariés.</p></div>
+      <div class="etape"><h3>Pamoja daima</h3><p class="q">19 DÉCEMBRE 2026</p><p>La mairie, l'église et une soirée en noir et or, avec vous.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="colonne">
+    <div class="orne"><h2 data-i18n="souvenirs.galerie">Galerie</h2></div>
+    <div class="galerie">
+      <figure><img src="../assets/images/galerie/photo-3.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/images/galerie/photo-1.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/images/galerie/photo-2.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/images/galerie/photo-4.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/images/galerie/photo-5.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/images/couple/hero.jpg" alt="" loading="lazy"></figure>
+    </div>
+    <p class="centre" style="margin-top:24px">
+      <a class="lien" id="album" href="#" target="_blank" rel="noopener" data-requiert="album" data-i18n="souvenirs.album">Voir l'album partagé</a>
+      <a class="lien" data-wa="Voici mes photos du mariage #PamojaDaima">Envoyer mes photos #PamojaDaima</a>
+    </p>
+  </div>
+</section>
+<section class="ivoire centre">
+  <div class="etroit">
+    <div class="orne"><h2 data-i18n="souvenirs.livre">Livre d'or</h2></div>
+    <p style="max-width:52ch;margin:0 auto">Laissez-nous un mot : nous les relirons ensemble, longtemps après le 19 décembre.</p>
+    <div class="messages" id="messages"></div>
+    <form class="form" id="livreForm" novalidate style="text-align:left;max-width:560px;margin:24px auto 0">
+      <div class="piege" aria-hidden="true"><label>Site<input name="site" tabindex="-1" autocomplete="off"></label></div>
+      <label>Votre nom<input name="nom" required></label>
+      <label>Votre message<textarea name="message" rows="3" required maxlength="600"></textarea></label>
+      <button class="bouton" type="submit" data-i18n="livre.signer">Signer le livre d'or</button>
+      <p class="etat" id="livreEtat" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+
+<footer>
+  <img src="../assets/images/logo/sceau-or.svg" alt="">
+  <p class="devise" data-i18n="pied.devise">Stabilité &amp; sagesse</p>
+  <p class="sans">SARAH &amp; JACK — BUNIA, 19 DÉCEMBRE 2026</p>
+</footer>
+
+<a class="flottant" id="flottant" href="../invites/index.html#rsvp"><span data-i18n="rsvp.bouton">Confirmer ma présence</span></a>
+
+<nav class="bas" aria-label="Navigation mobile">
+  <a href="../index.html" data-nav="accueil"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></svg><span data-i18n="nav.accueil">Accueil</span></a>
+  <a href="../programme/index.html" data-nav="programme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="nav.programme">Programme</span></a>
+  <a href="../familles/index.html" data-nav="familles"><svg viewBox="0 0 24 24"><path d="M12 21V11M12 11c-4 0-6-3-6-6 3 0 6 2 6 6zm0 0c4 0 6-3 6-6-3 0-6 2-6 6zM6 21h12"/></svg><span>Familles</span></a>
+  <a href="../direct/index.html" data-nav="direct"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg><span>Direct</span></a>
+  <button data-ouvre-feuille><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span data-i18n="nav.plus">Plus</span></button>
+</nav>
+<div class="feuille" id="feuille"><div class="panneau">
+  <button class="fermer" data-ferme-feuille aria-label="Fermer">×</button>
+  <a href="../invites/index.html#rsvp">RSVP</a>
+  <a href="../invites/index.html#venir" data-i18n="invites.venir">Venir à Bunia</a>
+  <a href="../invites/index.html#tenues" data-i18n="invites.tenues">Tenues</a>
+  <a href="../invites/index.html#cadeaux" data-i18n="invites.cadeaux">Cadeaux</a>
+  <a href="../invites/index.html#table" data-i18n="invites.table">Ma table</a>
+  <a href="../invites/index.html#faq" data-i18n="invites.faq">Questions fréquentes</a>
+  <a href="../souvenirs/index.html" data-i18n="nav.souvenirs">Souvenirs</a>
+</div></div>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/pages.js"></script>
+</body>
+</html>
