@@ -91,7 +91,7 @@ body[data-page=invites] .flottant{display:none}
 .heros .devise{font-style:italic;color:var(--cafe);margin-top:12px}
 .heros .date{font-size:22px;margin:14px 0 20px}
 .heros .compte{margin-bottom:26px}
-@media (max-width:820px){.heros{grid-template-columns:1fr;gap:20px;padding-top:34px}.heros .photo{max-width:420px;margin:0 auto}.heros .fleur{top:-4%;width:clamp(145px,36vw,210px)}.heros .fleur-gauche{left:-20%}.heros .fleur-droite{right:-20%}}
+@media (max-width:820px){.heros{grid-template-columns:1fr;gap:20px;padding-top:34px}.heros .photo{max-width:420px;margin:0 auto}.heros .fleur{z-index:0;top:-4%;width:clamp(145px,36vw,210px)}.heros .fleur-gauche{left:-20%}.heros .fleur-droite{right:-20%}}
 @media (max-width:480px){.heros .fleur{top:-4%;width:145px}.heros .fleur-gauche{left:-5%}.heros .fleur-droite{right:-14%}}
 .resume{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1080px;margin:0 auto;padding:0 20px}
 .resume a{text-decoration:none;text-align:center;padding:26px 18px;border:1.5px solid var(--or);border-radius:6px;background:var(--blanc)}
