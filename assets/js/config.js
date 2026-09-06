@@ -3,11 +3,12 @@
    Une valeur vide = la fonction correspondante est masquée sur le site.
    ============================================================ */
 window.SITE = {
+  siteUrl: "https://jackmutobu.github.io/SarahAndJ/", // URL des invitations choisie par Jack
   base: "/SarahAndJ",                       // chemin du projet sur GitHub Pages
   mariage: "2026-12-19",                     // date du mariage
   fuseau: "Africa/Lubumbashi",               // Bunia = UTC+2
   moments: [
-    { id: "civil",     debut: "10:00", fin: "11:30", lieu: "Mairie de Bunia",   adresse: "", carte: "" },
+    { id: "civil",     debut: "10:00", fin: "11:30", lieu: "",   adresse: "", carte: "" },
     { id: "eglise",    debut: "14:30", fin: "16:30", lieu: "",                  adresse: "", carte: "" },
     { id: "reception", debut: "19:00", fin: "23:59", lieu: "",                  adresse: "", carte: "" }
   ],

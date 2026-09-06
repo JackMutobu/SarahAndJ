@@ -1,121 +1,86 @@
-/* app.js — commun à toutes les pages */
+/* Shared behaviour. All event locations come from config.js. */
 (function () {
-  var S = window.SITE, R = document.documentElement.getAttribute("data-racine") || ".";
+  'use strict';
+  var S = window.SITE, R = document.documentElement.getAttribute('data-racine') || '.';
   window.RACINE = R;
-
-  /* ---- outils date (heure de Bunia, UTC+2) ---- */
-  function bunia(hm) { return new Date(S.mariage + "T" + (hm || "00:00") + ":00+02:00"); }
-  window.bunia = bunia;
-  window.momentActuel = function () {
-    var t = Date.now();
-    if (t < bunia("00:00")) return "avant";
-    if (t > bunia("23:59").getTime() + 6 * 36e5) return "apres";
-    for (var i = S.moments.length - 1; i >= 0; i--) if (t >= bunia(S.moments[i].debut)) return S.moments[i].id;
-    return "jourj";
+  window.memoire = {
+    lire: function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (_) { return null; } },
+    ecrire: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} }
   };
-
-  /* ---- i18n ---- */
-  var lang = localStorage.getItem("lang") || "fr", T = window.TRADUCTIONS || {};
-  window.t = function (k, defaut) { var v = T[k]; return v ? v[lang === "sw" ? 1 : 0] : (defaut != null ? defaut : k); };
+  var lang = 'fr';
+  try { lang = localStorage.getItem('lang') === 'sw' ? 'sw' : 'fr'; } catch (_) {}
   window.langue = function () { return lang; };
-  function appliquer() {
+  window.t = function (key, fallback) { var v = (window.TRADUCTIONS || {})[key]; return v ? v[lang === 'sw' ? 1 : 0] : (fallback == null ? key : fallback); };
+  window.bunia = function (hm) { return new Date(S.mariage + 'T' + (hm || '00:00') + ':00+02:00'); };
+  window.momentActuel = function () {
+    var now = Date.now();
+    if (now < window.bunia()) return 'avant';
+    if (now >= window.bunia().getTime() + 30 * 36e5) return 'apres';
+    for (var i = S.moments.length - 1; i >= 0; i--) if (now >= window.bunia(S.moments[i].debut)) return S.moments[i].id;
+    return 'jourj';
+  };
+  function configured(key) { var value = key.split('.').reduce(function (o, k) { return o && o[k]; }, S); return Array.isArray(value) ? value.length > 0 : !!value; }
+  window.appliquerLangue = function () {
     document.documentElement.lang = lang;
-    document.querySelectorAll("[data-i18n]").forEach(function (el) { if (!el.hasAttribute("data-orig")) el.setAttribute("data-orig", el.textContent); el.textContent = window.t(el.getAttribute("data-i18n"), el.getAttribute("data-orig")); });
-    document.querySelectorAll("[data-i18n-fr]").forEach(function (el) { el.textContent = el.getAttribute(lang === "sw" ? "data-i18n-sw" : "data-i18n-fr") || el.getAttribute("data-i18n-fr"); });
-    document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang); });
-    document.dispatchEvent(new CustomEvent("langue", { detail: lang }));
-  }
-  appliquer();
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest(".lang button"); if (!b) return;
-    lang = b.getAttribute("data-lang"); localStorage.setItem("lang", lang); appliquer();
-  });
-
-  /* ---- navigation : page courante, feuille "Plus" ---- */
-  var page = document.body.getAttribute("data-page");
-  document.querySelectorAll("[data-nav]").forEach(function (a) { if (a.getAttribute("data-nav") === page) a.setAttribute("aria-current", "page"); });
-  var feuille = document.getElementById("feuille");
-  document.addEventListener("click", function (e) {
-    if (e.target.closest("[data-ouvre-feuille]")) feuille.classList.add("on");
-    if (e.target.closest("[data-ferme-feuille]") || e.target === feuille) feuille.classList.remove("on");
-  });
-
-  /* ---- fonctions masquées tant qu'elles ne sont pas configurées ---- */
-  function actif(cle) {
-    var v = cle.split(".").reduce(function (o, k) { return o && o[k]; }, S);
-    return Array.isArray(v) ? v.length > 0 : !!v;
-  }
-  document.querySelectorAll("[data-requiert]").forEach(function (el) {
-    if (!el.getAttribute("data-requiert").split(",").every(actif)) el.classList.add("cache");
-  });
-  document.querySelectorAll("[data-requiert-aucun]").forEach(function (el) {
-    if (el.getAttribute("data-requiert-aucun").split(",").some(actif)) el.classList.add("cache");
-  });
-
-  /* ---- liens WhatsApp ---- */
-  document.querySelectorAll("[data-wa]").forEach(function (a) {
-    if (!S.whatsapp) { a.classList.add("cache"); return; }
-    a.href = "https://wa.me/" + S.whatsapp + "?text=" + encodeURIComponent(a.getAttribute("data-wa"));
-  });
-
-  /* ---- compte à rebours ---- */
-  var c = document.getElementById("compte");
-  if (c) {
-    var cible = bunia(S.moments[0].debut).getTime();
-    function pad(n) { return n < 10 ? "0" + n : "" + n; }
-    (function tic() {
-      var d = cible - Date.now(), now = Date.now();
-      if (window.momentActuel() === "apres") {
-        var ans = Math.floor((now - bunia("00:00")) / (365.25 * 864e5));
-        c.innerHTML = "<p class='script' style='font-size:44px;color:var(--or)'>" + (ans >= 1 ? "Mariés depuis " + ans + " an" + (ans > 1 ? "s" : "") : "Mariés") + "</p>"; return;
-      }
-      if (d <= 0) { c.innerHTML = "<p class='script' style='font-size:44px;color:var(--or)'>C'est aujourd'hui</p>"; return; }
-      c.innerHTML = [["compte.jours", Math.floor(d / 864e5)], ["compte.heures", pad(Math.floor(d / 36e5) % 24)], ["compte.minutes", pad(Math.floor(d / 6e4) % 60)], ["compte.secondes", pad(Math.floor(d / 1e3) % 60)]]
-        .map(function (x) { return "<div><b>" + x[1] + "</b><span data-i18n='" + x[0] + "'>" + window.t(x[0]) + "</span></div>"; }).join("");
-      setTimeout(tic, 1000);
-    })();
-  }
-
-  /* ---- bandeau du jour J ---- */
-  var m = window.momentActuel();
-  if (["jourj", "civil", "eglise", "reception"].indexOf(m) > -1) {
-    var textes = { jourj: "C'est aujourd'hui — mariage civil à " + S.moments[0].debut, civil: "Maintenant : mairie. Ensuite : église à " + S.moments[1].debut, eglise: "Maintenant : église. Ensuite : réception à " + S.moments[2].debut, reception: "Maintenant : réception — dress code noir et or" };
-    var b = document.createElement("div"); b.className = "bandeau-jour"; b.textContent = textes[m].toUpperCase();
-    document.body.insertBefore(b, document.body.firstChild.nextSibling);
-  }
-
-  /* ---- bouton RSVP flottant : état confirmé ---- */
-  var fl = document.getElementById("flottant");
-  if (fl && localStorage.getItem("rsvp")) { fl.classList.add("fait"); fl.innerHTML = "<span data-i18n='rsvp.fait'>Présence confirmée</span> · <span data-i18n='rsvp.modifier'>Modifier</span>"; }
-
-  /* ---- agenda (.ics) ---- */
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest("[data-ics]"); if (!a) return; e.preventDefault();
-    var d = S.mariage.replace(/-/g, "");
-    function ev(t, deb, fin, lieu) { return ["BEGIN:VEVENT", "UID:" + t.replace(/\W/g, "") + "@sarahetjack", "DTSTAMP:" + d + "T000000Z", "DTSTART;TZID=" + S.fuseau + ":" + d + "T" + deb.replace(":", "") + "00", "DTEND;TZID=" + S.fuseau + ":" + d + "T" + fin.replace(":", "") + "00", "SUMMARY:Mariage de Sarah & Jack — " + t, "LOCATION:" + (lieu || "Bunia"), "BEGIN:VALARM", "TRIGGER:-PT2H", "ACTION:DISPLAY", "DESCRIPTION:" + t, "END:VALARM", "END:VEVENT"].join("\r\n"); }
-    var seul = a.getAttribute("data-ics"), evs;
-    if (seul === "direct") evs = [ev("Diffusion en direct", S.diffusionDebut, S.moments[1].fin, "En ligne")];
-    else evs = [ev("Mariage civil", S.moments[0].debut, S.moments[0].fin, S.moments[0].lieu), ev("Mariage religieux", S.moments[1].debut, S.moments[1].fin, S.moments[1].lieu), ev("Réception", S.moments[2].debut, S.moments[2].fin, S.moments[2].lieu)];
-    var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Sarah & Jack//FR"].concat(evs, ["END:VCALENDAR"]).join("\r\n");
-    var l = document.createElement("a"); l.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); l.download = "mariage-sarah-jack.ics"; l.click();
-  });
-
-  /* ---- fuseaux horaires ---- */
-  var fz = document.getElementById("fuseaux");
-  if (fz) {
-    var messe = bunia(S.moments[1].debut), villes = [["Bunia", "Africa/Lubumbashi"], ["Kinshasa", "Africa/Kinshasa"], ["Bruxelles", "Europe/Brussels"], ["Paris", "Europe/Paris"], ["Londres", "Europe/London"], ["Toronto", "America/Toronto"], ["Johannesburg", "Africa/Johannesburg"], ["Dubaï", "Asia/Dubai"]];
-    try { var local = Intl.DateTimeFormat().resolvedOptions().timeZone; if (local && !villes.some(function (v) { return v[1] === local; })) villes.splice(1, 0, [window.t("direct.chezvous"), local]); } catch (e) { }
-    fz.innerHTML = villes.map(function (v) { try { var h = new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit", timeZone: v[1] }).format(messe); return "<div><b>" + h.replace(":", "h") + "</b><span>" + v[0].toUpperCase() + "</span></div>"; } catch (e) { return ""; } }).join("");
-  }
-
-  /* ---- envoi vers Google Apps Script ---- */
-  window.envoyerScript = function (obj) {
-    if (!S.appsScript) return Promise.reject(new Error("non configuré"));
-    return fetch(S.appsScript, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(obj) })
-      .then(function (r) { return r.json(); });
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = window.t(el.dataset.i18n, el.textContent); });
+    document.querySelectorAll('[data-i18n-fr]').forEach(function (el) { el.textContent = el.getAttribute('data-i18n-' + lang) || el.dataset.i18nFr; });
+    document.querySelectorAll('[data-placeholder-fr]').forEach(function (el) { el.placeholder = el.getAttribute('data-placeholder-' + lang); });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang); });
+    document.querySelectorAll('[data-lieu]').forEach(function (el) { var m = S.moments[+el.dataset.lieu]; el.textContent = m.lieu || window.t('programme.lieu.attente'); });
+    document.querySelectorAll('[data-horaire]').forEach(function (el) { el.textContent = S.moments[+el.dataset.horaire].debut.replace(':', ' H '); });
+    var fl = document.getElementById('flottant'), saved = window.memoire.lire('rsvp');
+    if (fl && saved && saved.envoye === true) { fl.classList.add('fait'); fl.textContent = window.t('rsvp.fait') + ' · ' + window.t('rsvp.modifier'); }
+    document.dispatchEvent(new CustomEvent('langue'));
   };
-  window.lireScript = function (params) {
-    if (!S.appsScript) return Promise.reject(new Error("non configuré"));
-    return fetch(S.appsScript + "?" + new URLSearchParams(params).toString()).then(function (r) { return r.json(); });
+  document.addEventListener('click', function (e) { var b = e.target.closest('.lang button'); if (!b) return; lang = b.dataset.lang; try { localStorage.setItem('lang', lang); } catch (_) {} window.appliquerLangue(); });
+  document.querySelectorAll('[data-requiert]').forEach(function (el) { if (!el.dataset.requiert.split(',').every(configured)) el.classList.add('cache'); });
+  document.querySelectorAll('[data-requiert-aucun]').forEach(function (el) { if (el.dataset.requiertAucun.split(',').some(configured)) el.classList.add('cache'); });
+  document.querySelectorAll('[data-service="rsvp"]').forEach(function (el) { if (!S.appsScript && !S.whatsapp) el.classList.add('cache'); });
+  document.querySelectorAll('[data-wa]').forEach(function (a) { var number = S[a.dataset.waNumber || 'whatsapp']; if (!number) { a.classList.add('cache'); return; } a.href = 'https://wa.me/' + number + '?text=' + encodeURIComponent(a.dataset.wa); });
+  document.querySelectorAll('[data-nav]').forEach(function (a) { if (a.dataset.nav === document.body.dataset.page) a.setAttribute('aria-current', 'page'); });
+  var sheet = document.getElementById('feuille'), opener;
+  function closeSheet() { if (!sheet) return; sheet.classList.remove('on'); sheet.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; document.querySelectorAll('[data-ouvre-feuille]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); }); if (opener) opener.focus(); }
+  document.addEventListener('click', function (e) {
+    var open = e.target.closest('[data-ouvre-feuille]');
+    if (open && sheet) { opener = open; sheet.classList.add('on'); sheet.setAttribute('aria-hidden', 'false'); open.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; sheet.querySelector('button').focus(); }
+    if (sheet && (e.target === sheet || e.target.closest('[data-ferme-feuille]') || e.target.closest('.feuille a'))) closeSheet();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!sheet || !sheet.classList.contains('on')) return;
+    if (e.key === 'Escape') closeSheet();
+    if (e.key === 'Tab') { var items = Array.from(sheet.querySelectorAll('a[href],button')).filter(function (n) { return !n.classList.contains('cache'); }); var first = items[0], last = items[items.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } }
+  });
+  window.afficherCompte = function (el, target, seconds) {
+    if (!el) return; var remaining = Math.max(0, target - Date.now());
+    var values = [['compte.jours', Math.floor(remaining / 864e5)], ['compte.heures', String(Math.floor(remaining / 36e5) % 24).padStart(2, '0')], ['compte.minutes', String(Math.floor(remaining / 6e4) % 60).padStart(2, '0')]];
+    if (seconds) values.push(['compte.secondes', String(Math.floor(remaining / 1e3) % 60).padStart(2, '0')]);
+    el.innerHTML = values.map(function (v) { return '<div><b>' + v[1] + '</b><span>' + window.t(v[0]) + '</span></div>'; }).join('');
   };
+  function updateHome() {
+    var c = document.getElementById('compte'), current = window.momentActuel();
+    if (c) { if (current === 'apres') c.textContent = window.t('home.married'); else if (current !== 'avant') c.textContent = window.t('home.today'); else window.afficherCompte(c, window.bunia(S.moments[0].debut), true); }
+    var live = document.getElementById('etat-direct-accueil');
+    if (live) live.textContent = current === 'apres' ? window.t('direct.apres') : window.t('direct.avant') + ' ' + S.diffusionDebut.replace(':', ' h ') + ' · ' + window.t('direct.bunia');
+  }
+  var countdown = document.getElementById('compte'); if (countdown) setInterval(updateHome, 1000);
+  document.addEventListener('langue', updateHome);
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-ics]'); if (!a) return; e.preventDefault();
+    function escapeICS(v) { return String(v).replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;'); }
+    function utc(hm) { return window.bunia(hm).toISOString().replace(/[-:]/g, '').replace('.000', ''); }
+    var entries = a.dataset.ics === 'direct' ? [{ id: 'direct', debut: S.diffusionDebut, fin: S.moments[1].fin, lieu: window.t('direct.titre') }] : S.moments;
+    var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Sarah et Jack//Wedding//FR', 'CALSCALE:GREGORIAN'];
+    entries.forEach(function (m) { lines.push('BEGIN:VEVENT', 'UID:' + m.id + '-' + S.mariage + '@sarahetjack', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, ''), 'DTSTART:' + utc(m.debut), 'DTEND:' + utc(m.fin), 'SUMMARY:' + escapeICS('Sarah & Jack - ' + window.t(m.id === 'direct' ? 'direct.titre' : 'moment.' + m.id)), 'LOCATION:' + escapeICS(m.lieu || 'Bunia - ' + window.t('programme.lieu.attente')), 'DESCRIPTION:' + escapeICS(window.t('calendar.provisional')), 'END:VEVENT'); });
+    lines.push('END:VCALENDAR'); var url = URL.createObjectURL(new Blob([lines.join('\r\n') + '\r\n'], { type: 'text/calendar' })); var link = document.createElement('a'); link.href = url; link.download = 'mariage-sarah-jack.ics'; link.click(); setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  });
+  function timezones() {
+    var fz = document.getElementById('fuseaux'); if (!fz) return;
+    var cities = [['Bunia','Africa/Lubumbashi'],['Kinshasa','Africa/Kinshasa'],['Bruxelles','Europe/Brussels'],['Paris','Europe/Paris'],['Londres','Europe/London'],['Toronto','America/Toronto'],['Johannesburg','Africa/Johannesburg'],['Dubaï','Asia/Dubai']];
+    fz.innerHTML = ''; cities.forEach(function (v) { var d = document.createElement('div'), b = document.createElement('b'), label = document.createElement('span'); b.textContent = new Intl.DateTimeFormat(lang === 'sw' ? 'sw-TZ' : 'fr-FR', { hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:v[1] }).format(window.bunia(S.moments[1].debut)); label.textContent = v[0]; d.append(b,label); fz.appendChild(d); });
+  }
+  document.addEventListener('langue', timezones);
+  function request(url, options) { var abort = new AbortController(), timer = setTimeout(function () { abort.abort(); }, 20000); return fetch(url, Object.assign({}, options, { signal: abort.signal })).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).finally(function () { clearTimeout(timer); }); }
+  window.envoyerScript = function (obj) { if (!S.appsScript) return Promise.reject(new Error('not configured')); return request(S.appsScript, { method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(obj) }); };
+  window.lireScript = function (params) { if (!S.appsScript) return Promise.reject(new Error('not configured')); return request(S.appsScript + '?' + new URLSearchParams(params).toString()); };
+  window.appliquerLangue();
 })();
