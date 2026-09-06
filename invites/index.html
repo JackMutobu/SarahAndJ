@@ -1,149 +1,134 @@
 <!DOCTYPE html>
-<html lang="fr" data-racine="..">
+
+<html data-racine=".." lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Espace invités — Sarah &amp; Jack, 19 décembre 2026</title>
-<meta name="description" content="Mariage de Sarah et Jack, Bunia, 19 décembre 2026. Pamoja daima.">
-<link rel="icon" href="../assets/images/logo/favicon.png">
-<link rel="manifest" href="../manifest.webmanifest">
-<meta name="theme-color" content="#1B1B1B">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/site.css?v=20260902-3">
+<meta content="Mariage de Sarah et Jack, Bunia, 19 décembre 2026. Pamoja daima." name="description"/>
+<link href="../assets/images/logo/favicon.png" rel="icon"/>
+<link href="../manifest.webmanifest" rel="manifest"/>
+<meta content="#1B1B1B" name="theme-color"/>
+<link href="../assets/css/site.css?v=20260906" rel="stylesheet"/>
 <script src="../assets/js/config.js"></script>
-<script src="../assets/data/translations.js"></script>
+<script src="../assets/data/translations.js?v=20260906-familles"></script>
 <script src="../assets/data/familles.js"></script>
 <script src="../assets/data/faq.js"></script>
 </head>
-<body data-page="invites">
+<body data-page="invites"><a class="skip-link" data-i18n="skip" href="#contenu">Aller au contenu</a>
 <header class="nav">
-  <div class="in">
-    <a class="logo" href="../index.html"><img src="../assets/images/logo/sceau-cafe.svg" alt="Monogramme J et S"><b>Sarah &amp; Jack</b></a>
-    <nav aria-label="Navigation principale"><ul>
-      <li><a href="../index.html" data-nav="accueil" data-i18n="nav.accueil">Accueil</a></li>
-      <li><a href="../programme/index.html" data-nav="programme" data-i18n="nav.programme">Programme</a></li>
-      <li><a href="../familles/index.html" data-nav="familles" data-i18n="nav.familles">Nos familles</a></li>
-      <li><a href="../direct/index.html" data-nav="direct" data-i18n="nav.direct">En direct</a></li>
-      <li><a href="../invites/index.html" data-nav="invites" data-i18n="nav.invites">Espace invités</a></li>
-      <li><a href="../souvenirs/index.html" data-nav="souvenirs" data-i18n="nav.souvenirs">Souvenirs</a></li>
-    </ul></nav>
-    <div class="lang" role="group" aria-label="Langue"><button data-lang="fr" aria-pressed="true">FR</button><button data-lang="sw" aria-pressed="false">SW</button></div>
-  </div>
+<div class="in">
+<a class="logo" href="../index.html"><img alt="Monogramme J et S" src="../assets/images/logo/sceau-cafe.svg"/><b>Sarah &amp; Jack</b></a>
+<nav aria-label="Navigation principale"><ul>
+<li><a data-i18n="nav.accueil" data-nav="accueil" href="../index.html">Accueil</a></li>
+<li><a data-i18n="nav.programme" data-nav="programme" href="../programme/index.html">Programme</a></li>
+<li><a data-i18n="nav.familles" data-nav="familles" href="../familles/index.html">Nos familles</a></li>
+<li><a data-i18n="nav.direct" data-nav="direct" href="../direct/index.html">En direct</a></li>
+<li><a data-i18n="nav.invites" data-nav="invites" href="../invites/index.html">Espace invités</a></li>
+<li><a data-i18n="nav.souvenirs" data-nav="souvenirs" href="../souvenirs/index.html">Souvenirs</a></li>
+</ul></nav>
+<div aria-label="Langue" class="lang" role="group"><button aria-pressed="true" data-lang="fr">FR</button><button aria-pressed="false" data-lang="sw">SW</button></div>
+</div>
 </header>
-
-
-<section>
-  <div class="colonne">
-    <div class="orne"><h1 data-i18n="invites.titre">Espace invités</h1></div>
-    <div class="cartes">
-      <button data-panneau="rsvp" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg><span data-i18n="invites.rsvp"></span></button><button data-panneau="venir" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 15l9-9 9 9M6 12v8h12v-8"/></svg><span data-i18n="invites.venir"></span></button><button data-panneau="tenues" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M8 3l4 3 4-3 4 5-3 2v11H7V10L4 8z"/></svg><span data-i18n="invites.tenues"></span></button>
-      <button data-panneau="table" aria-expanded="false"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="8" ry="3"/><path d="M6 10v8M18 10v8M4 18h4M16 18h4"/></svg><span data-i18n="invites.table"></span></button><button data-panneau="cadeaux" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 9h18v4H3zM5 13v8h14v-8M12 9v12M12 9c-3 0-5-2-4-4s4 0 4 4zm0 0c3 0 5-2 4-4s-4 0-4 4z"/></svg><span data-i18n="invites.cadeaux"></span></button><button data-panneau="faq" aria-expanded="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg><span data-i18n="invites.faq"></span></button>
-    </div>
-    <div class="panneaux">
-
-      <div class="panneau" id="p-rsvp">
-        <h2 data-i18n="rsvp.bouton">Confirmer ma présence</h2>
-        <p>Réponse souhaitée avant le 20 novembre 2026. Une réponse par famille ou par groupe suffit.</p>
-        <form class="form" id="rsvpForm" novalidate>
-          <div class="piege" aria-hidden="true"><label>Site<input name="site" tabindex="-1" autocomplete="off"></label></div>
-          <div class="deuxcol">
-            <label>Nom complet<input name="nom" required autocomplete="name"></label>
-            <label>Téléphone ou WhatsApp<input name="tel" type="tel" autocomplete="tel"></label>
-          </div>
-          <fieldset><legend>Nous serons présents</legend><div class="ligne">
-            <label><input type="checkbox" name="moments" value="Mairie">Mairie, 10 h</label>
-            <label><input type="checkbox" name="moments" value="Église">Église, 14 h 30</label>
-            <label><input type="checkbox" name="moments" value="Réception">Réception, 19 h</label>
-            <label><input type="checkbox" name="moments" value="Aucun">Nous ne pourrons pas venir</label>
-          </div></fieldset>
-          <div class="deuxcol">
-            <label>Nombre exact de personnes (vous compris)<input name="nombre" type="number" min="0" max="20" required></label>
-            <label>Dont enfants de moins de 12 ans<input name="enfants" type="number" min="0" max="20" value="0"></label>
-          </div>
-          <label>Noms des personnes qui vous accompagnent<input name="accompagnants" placeholder="Prénoms et noms, séparés par des virgules"></label>
-          <label>Restrictions alimentaires<input name="regime" placeholder="Allergies, sans porc, végétarien…"></label>
-          <div class="deuxcol">
-            <label>Ville de départ<input name="ville"></label>
-            <label>Besoin d'hébergement<select name="hebergement"><option>Non</option><option>Oui, pour 1 nuit</option><option>Oui, pour 2 nuits ou plus</option></select></label>
-          </div>
-          <label>Besoin d'un transport depuis l'aéroport<select name="transport"><option>Non</option><option>Oui</option></select></label>
-          <label>Un mot, une chanson qui vous fera danser<textarea name="message" rows="3"></textarea></label>
-          <button class="bouton" type="submit" data-i18n="rsvp.bouton">Confirmer ma présence</button>
-          <p class="etat" id="rsvpEtat" aria-live="polite"></p>
-          <a class="lien cache" id="rsvpWa" target="_blank" rel="noopener">Envoyer ma réponse sur WhatsApp</a>
-        </form>
-      </div>
-
-      <div class="panneau" id="p-venir">
-        <h2 data-i18n="invites.venir">Venir à Bunia</h2>
-        <h3>Par avion</h3><p>Bunia est desservie par des vols intérieurs depuis Kinshasa et Goma. Depuis l'étranger, on passe le plus souvent par Entebbe ou Goma ; indiquez votre ville de départ dans le RSVP et nous vous aiderons à organiser le trajet.</p>
-        <h3>Se loger</h3><div id="hotels"><p data-requiert-aucun="hotels">Une liste d'hôtels recommandés, avec les tarifs négociés pour nos invités, sera publiée ici. En attendant, notre famille peut réserver pour vous.</p></div>
-        <h3>En décembre</h3><p>C'est la fin de la saison des pluies en Ituri : prévoyez une petite couche pour le soir, et un parapluie qui, avec un peu de chance, restera fermé.</p>
-        <h3>Nous joindre</h3><p><a data-wa="Bonjour Sarah et Jack, j'ai une question pour venir à Bunia.">Écrivez-nous sur WhatsApp</a><span data-requiert-aucun="whatsapp">Le numéro de contact sera publié ici.</span></p>
-      </div>
-
-      <div class="panneau" id="p-tenues">
-        <h2 data-i18n="invites.tenues">Tenues</h2>
-        <h3>Le soir : noir et or</h3>
-        <div class="pastilles" aria-hidden="true"><i style="background:#1B1B1B"></i><i style="background:#C9A548"></i><i style="background:#DCC898"></i><i style="background:#9C9C9C"></i></div>
-        <p>Mesdames : robe longue noire, or ou champagne. Messieurs : costume noir, chemise blanche, cravate ou nœud noir ou or.</p>
-        <p style="font-style:italic;color:var(--cafe);margin-top:8px">Le blanc est réservé à la mariée.</p>
-        <h3>Le matin et l'après-midi</h3><p>Tenue de ville élégante. Le thème noir et or ne concerne que la soirée.</p>
-      </div>
-
-      <div class="panneau" id="p-table">
-        <h2 data-i18n="invites.table">Ma table</h2>
-        <p>Entrez le code inscrit sur votre invitation : vous verrez uniquement votre table. Le plan est publié la semaine du mariage.</p>
-        <form class="form" id="tableForm" novalidate>
-          <label>Code d'invitation<input name="code" autocomplete="off" placeholder="Ex. KAT-0412" style="text-transform:uppercase"></label>
-          <button class="bouton" type="submit">Trouver ma table</button>
-        </form>
-        <p class="res" id="resPlan" aria-live="polite"></p>
-      </div>
-
-      <div class="panneau" id="p-cadeaux">
-        <h2 data-i18n="invites.cadeaux">Cadeaux</h2>
-        <p>Votre présence à Bunia est le plus beau des cadeaux. Pour celles et ceux qui souhaitent participer à notre premier foyer, une contribution est possible par mobile money.</p>
-        <div class="canaux" id="canaux"><span data-requiert-aucun="mobileMoney">Les numéros seront publiés ici.</span></div>
-      </div>
-
-      <div class="panneau" id="p-faq">
-        <h2 data-i18n="invites.faq">Questions fréquentes</h2>
-        <div class="accordeon" id="faq"></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
+<main id="contenu"><section>
+<div class="colonne">
+<div class="orne"><h1 data-i18n="invites.titre">Espace invités</h1></div>
+<div class="cartes">
+<button aria-expanded="false" data-panneau="rsvp"><svg viewbox="0 0 24 24"><path d="M4 6h16v12H4zM4 7l8 6 8-6"></path></svg><span data-i18n="invites.rsvp"></span></button><button aria-expanded="false" data-panneau="venir"><svg viewbox="0 0 24 24"><path d="M3 15l9-9 9 9M6 12v8h12v-8"></path></svg><span data-i18n="invites.venir"></span></button><button aria-expanded="false" data-panneau="tenues"><svg viewbox="0 0 24 24"><path d="M8 3l4 3 4-3 4 5-3 2v11H7V10L4 8z"></path></svg><span data-i18n="invites.tenues"></span></button>
+<button aria-expanded="false" data-panneau="table"><svg viewbox="0 0 24 24"><ellipse cx="12" cy="8" rx="8" ry="3"></ellipse><path d="M6 10v8M18 10v8M4 18h4M16 18h4"></path></svg><span data-i18n="invites.table"></span></button><button aria-expanded="false" data-panneau="cadeaux"><svg viewbox="0 0 24 24"><path d="M3 9h18v4H3zM5 13v8h14v-8M12 9v12M12 9c-3 0-5-2-4-4s4 0 4 4zm0 0c3 0 5-2 4-4s-4 0-4 4z"></path></svg><span data-i18n="invites.cadeaux"></span></button><button aria-expanded="false" data-panneau="faq"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"></path></svg><span data-i18n="invites.faq"></span></button>
+</div>
+<div class="panneaux">
+<div class="panneau" id="p-rsvp">
+<h2 data-i18n="rsvp.bouton">Confirmer ma présence</h2>
+<p data-i18n-fr="Réponse souhaitée avant le 20 novembre 2026. Une réponse par famille ou par groupe suffit." data-i18n-sw="Tafadhali jibuni kabla ya 20 Novemba 2026. Jibu moja kwa familia au kikundi linatosha.">Réponse souhaitée avant le 20 novembre 2026. Une réponse par famille ou par groupe suffit.</p>
+<p class="service-note" data-i18n="rsvp.pending" data-requiert-aucun="appsScript,whatsapp">Les confirmations ouvriront prochainement. Revenez sur cette page pour nous répondre.</p><form class="form" data-service="rsvp" id="rsvpForm">
+<div aria-hidden="true" class="piege"><label>Site<input autocomplete="off" name="site" tabindex="-1"/></label></div>
+<div class="deuxcol">
+<label><span data-i18n-fr="Nom complet" data-i18n-sw="Jina kamili">Nom complet</span><input autocomplete="name" maxlength="200" name="nom" required=""/></label>
+<label><span data-i18n-fr="Téléphone ou WhatsApp" data-i18n-sw="Simu au WhatsApp">Téléphone ou WhatsApp</span><input autocomplete="tel" name="tel" type="tel"/></label>
+</div>
+<fieldset><legend data-i18n-fr="Nous serons présents" data-i18n-sw="Tutahudhuria">Nous serons présents</legend><div class="ligne">
+<label><input name="moments" type="checkbox" value="Mairie"/><span data-i18n-fr="Mairie, 10 h" data-i18n-sw="Ofisini, 10:00">Mairie, 10 h</span></label>
+<label><input name="moments" type="checkbox" value="Église"/><span data-i18n-fr="Église, 14 h 30" data-i18n-sw="Kanisani, 14:30">Église, 14 h 30</span></label>
+<label><input name="moments" type="checkbox" value="Réception"/><span data-i18n-fr="Réception, 19 h" data-i18n-sw="Sherehe, 19:00">Réception, 19 h</span></label>
+<label><input name="moments" type="checkbox" value="Aucun"/><span data-i18n-fr="Nous ne pourrons pas venir" data-i18n-sw="Hatutaweza kuja">Nous ne pourrons pas venir</span></label>
+</div></fieldset>
+<div class="deuxcol">
+<label><span data-i18n-fr="Nombre exact de personnes (vous compris)" data-i18n-sw="Jumla ya watu (pamoja nanyi)">Nombre exact de personnes (vous compris)</span><input max="20" min="0" name="nombre" required="" type="number"/></label>
+<label><span data-i18n-fr="Dont enfants de moins de 12 ans" data-i18n-sw="Kati yao, watoto chini ya miaka 12">Dont enfants de moins de 12 ans</span><input max="20" min="0" name="enfants" type="number" value="0"/></label>
+</div>
+<label><span data-i18n-fr="Noms des personnes qui vous accompagnent" data-i18n-sw="Majina ya watu mnaokuja nao">Noms des personnes qui vous accompagnent</span><input maxlength="200" name="accompagnants" placeholder="Prénoms et noms, séparés par des virgules"/></label>
+<label><span data-i18n-fr="Restrictions alimentaires" data-i18n-sw="Mahitaji maalumu ya chakula">Restrictions alimentaires</span><input name="regime" placeholder="Allergies, sans porc, végétarien…"/></label>
+<div class="deuxcol">
+<label><span data-i18n-fr="Ville de départ" data-i18n-sw="Mji mnaotoka">Ville de départ</span><input maxlength="200" name="ville"/></label>
+<label><span data-i18n-fr="Besoin d'hébergement" data-i18n-sw="Mnahitaji malazi?">Besoin d'hébergement</span><select name="hebergement"><option data-i18n-fr="Non" data-i18n-sw="Hapana" value="Non">Non</option><option data-i18n-fr="Oui, pour 1 nuit" data-i18n-sw="Ndiyo, usiku mmoja" value="Oui, pour 1 nuit">Oui, pour 1 nuit</option><option data-i18n-fr="Oui, pour 2 nuits ou plus" data-i18n-sw="Ndiyo, usiku mbili au zaidi" value="Oui, pour 2 nuits ou plus">Oui, pour 2 nuits ou plus</option></select></label>
+</div>
+<label><span data-i18n-fr="Besoin d'un transport depuis l'aéroport" data-i18n-sw="Mnahitaji usafiri kutoka uwanja wa ndege?">Besoin d'un transport depuis l'aéroport</span><select name="transport"><option data-i18n-fr="Non" data-i18n-sw="Hapana" value="Non">Non</option><option data-i18n-fr="Oui" data-i18n-sw="Ndiyo" value="Oui">Oui</option></select></label>
+<label><span data-i18n-fr="Un mot, une chanson qui vous fera danser" data-i18n-sw="Ujumbe au wimbo mnaopenda kucheza">Un mot, une chanson qui vous fera danser</span><textarea name="message" rows="3"></textarea></label>
+<button class="bouton" data-i18n="rsvp.bouton" type="submit">Confirmer ma présence</button>
+<p aria-live="polite" class="etat" id="rsvpEtat"></p>
+<a class="lien cache" data-i18n-fr="Envoyer ma réponse sur WhatsApp" data-i18n-sw="Tuma jibu langu kwa WhatsApp" id="rsvpWa" rel="noopener" target="_blank">Envoyer ma réponse sur WhatsApp</a>
+</form>
+</div>
+<div class="panneau" id="p-venir">
+<h2 data-i18n="invites.venir">Venir à Bunia</h2>
+<h3 data-i18n-fr="Votre trajet" data-i18n-sw="Safari yenu">Votre trajet</h3><p data-i18n-fr="Les informations pratiques et les contacts locaux seront ajoutés après confirmation des lieux. Vérifiez votre trajet auprès de votre transporteur avant de réserver." data-i18n-sw="Taarifa za safari na mawasiliano ya eneo zitaongezwa baada ya mahali kuthibitishwa. Hakikisheni safari na mtoa usafiri kabla ya kuweka nafasi.">Les informations pratiques et les contacts locaux seront ajoutés après confirmation des lieux. Vérifiez votre trajet auprès de votre transporteur avant de réserver.</p>
+<h3 data-i18n-fr="Se loger" data-i18n-sw="Malazi">Se loger</h3><div id="hotels"><p data-i18n-fr="Les informations d’hébergement seront ajoutées ici dès confirmation." data-i18n-sw="Taarifa za malazi zitaongezwa hapa zikithibitishwa." data-requiert-aucun="hotels">Les informations d’hébergement seront ajoutées ici dès confirmation.</p></div>
+<h3 data-i18n-fr="Le jour du mariage" data-i18n-sw="Siku ya harusi">Le jour du mariage</h3><p data-i18n-fr="Prévoyez du temps entre les trois moments. Les adresses et les indications de transport seront publiées ici." data-i18n-sw="Pangeni muda kati ya sehemu tatu. Anwani na taarifa za usafiri zitawekwa hapa.">Prévoyez du temps entre les trois moments. Les adresses et les indications de transport seront publiées ici.</p>
+<h3 data-i18n-fr="Nous joindre" data-i18n-sw="Wasilianeni nasi">Nous joindre</h3><p><a data-i18n-fr="Écrivez-nous sur WhatsApp" data-i18n-sw="Tuandikieni kwa WhatsApp" data-wa="Bonjour Sarah et Jack, j'ai une question pour venir à Bunia.">Écrivez-nous sur WhatsApp</a><span data-i18n-fr="Le numéro de contact sera publié ici." data-i18n-sw="Namba ya mawasiliano itawekwa hapa." data-requiert-aucun="whatsapp">Le numéro de contact sera publié ici.</span></p>
+</div>
+<div class="panneau" id="p-tenues">
+<h2 data-i18n="invites.tenues">Tenues</h2>
+<h3 data-i18n-fr="Le soir : noir et or" data-i18n-sw="Jioni: nyeusi na dhahabu">Le soir : noir et or</h3>
+<div class="dress-palette"><span><i style="background:#1B1B1B"></i><b data-i18n="color.black">Noir</b></span><span><i style="background:#C9A548"></i><b data-i18n="color.gold">Or</b></span></div>
+<p data-i18n="dress.guests">Mesdames : robe de soirée noire ou or. Messieurs : costume noir, chemise blanche, cravate ou nœud noir ou or.</p>
+<p data-i18n="dress.white" style="font-style:italic;color:var(--cafe);margin-top:8px">Le blanc est réservé à la mariée.</p>
+<h3 data-i18n-fr="Le matin et l'après-midi" data-i18n-sw="Asubuhi na mchana">Le matin et l'après-midi</h3><p data-i18n="dress.day">Tenue de ville élégante. Le thème noir et or ne concerne que la soirée.</p>
+</div>
+<div class="panneau" id="p-table">
+<h2 data-i18n="invites.table">Ma table</h2>
+<p data-i18n-fr="Entrez le code inscrit sur votre invitation : vous verrez uniquement votre table. Le plan est publié la semaine du mariage." data-i18n-sw="Ingizeni msimbo kwenye mwaliko wenu kuona meza yenu tu. Mpangilio utawekwa wiki ya harusi.">Entrez le code inscrit sur votre invitation : vous verrez uniquement votre table. Le plan est publié la semaine du mariage.</p>
+<form class="form" data-requiert="appsScript" id="tableForm">
+<label><span data-i18n-fr="Code d'invitation" data-i18n-sw="Msimbo wa mwaliko">Code d'invitation</span><input autocomplete="off" name="code" placeholder="Ex. KAT-0412" required="" style="text-transform:uppercase"/></label>
+<button class="bouton" data-i18n-fr="Trouver ma table" data-i18n-sw="Tafuta meza yangu" type="submit">Trouver ma table</button>
+</form>
+<p aria-live="polite" class="res" id="resPlan"></p>
+</div>
+<div class="panneau" id="p-cadeaux">
+<h2 data-i18n="invites.cadeaux">Cadeaux</h2>
+<p data-i18n-fr="Votre présence à Bunia est le plus beau des cadeaux. Pour celles et ceux qui souhaitent participer à notre premier foyer, une contribution est possible par mobile money." data-i18n-sw="Kuwepo kwenu Bunia ni zawadi nzuri zaidi. Wanaotaka kuchangia nyumba yetu wanaweza kutumia mobile money.">Votre présence à Bunia est le plus beau des cadeaux. Pour celles et ceux qui souhaitent participer à notre premier foyer, une contribution est possible par mobile money.</p>
+<div class="canaux" id="canaux"><span data-i18n-fr="Les numéros seront publiés ici." data-i18n-sw="Namba zitawekwa hapa." data-requiert-aucun="mobileMoney">Les numéros seront publiés ici.</span></div>
+</div>
+<div class="panneau" id="p-faq">
+<h2 data-i18n="invites.faq">Questions fréquentes</h2>
+<div class="accordeon" id="faq"></div>
+</div>
+</div>
+</div>
+</section></main>
 <footer>
-  <img src="../assets/images/logo/sceau-or.svg" alt="">
-  <p class="devise" data-i18n="pied.devise">Stabilité &amp; sagesse</p>
-  <p class="sans">SARAH &amp; JACK — BUNIA, 19 DÉCEMBRE 2026</p>
+<img alt="" src="../assets/images/logo/sceau-or.svg"/>
+<p class="devise" data-i18n="pied.devise">Stabilité &amp; sagesse</p>
+<p class="sans">SARAH &amp; JACK — BUNIA, 19 DÉCEMBRE 2026</p>
 </footer>
-
-<a class="flottant" id="flottant" href="../invites/index.html#rsvp"><span data-i18n="rsvp.bouton">Confirmer ma présence</span></a>
-
-<nav class="bas" aria-label="Navigation mobile">
-  <a href="../index.html" data-nav="accueil"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></svg><span data-i18n="nav.accueil">Accueil</span></a>
-  <a href="../programme/index.html" data-nav="programme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="nav.programme">Programme</span></a>
-  <a href="../familles/index.html" data-nav="familles"><svg viewBox="0 0 24 24"><path d="M12 21V11M12 11c-4 0-6-3-6-6 3 0 6 2 6 6zm0 0c4 0 6-3 6-6-3 0-6 2-6 6zM6 21h12"/></svg><span>Familles</span></a>
-  <a href="../direct/index.html" data-nav="direct"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg><span>Direct</span></a>
-  <button data-ouvre-feuille><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span data-i18n="nav.plus">Plus</span></button>
+<a class="flottant" href="../invites/index.html#rsvp" id="flottant"><span data-i18n="rsvp.bouton">Confirmer ma présence</span></a>
+<nav aria-label="Navigation mobile" class="bas">
+<a data-nav="accueil" href="../index.html"><svg viewbox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"></path></svg><span data-i18n="nav.accueil">Accueil</span></a>
+<a data-nav="programme" href="../programme/index.html"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span data-i18n="nav.programme">Programme</span></a>
+<a data-nav="familles" href="../familles/index.html"><svg viewbox="0 0 24 24"><path d="M12 21V11M12 11c-4 0-6-3-6-6 3 0 6 2 6 6zm0 0c4 0 6-3 6-6-3 0-6 2-6 6zM6 21h12"></path></svg><span data-i18n="nav.familles.short">Familles</span></a>
+<a data-nav="direct" href="../direct/index.html"><svg viewbox="0 0 24 24"><rect height="14" rx="2" width="18" x="3" y="5"></rect><path d="M10 9l5 3-5 3z"></path></svg><span data-i18n="nav.direct.short">Direct</span></a>
+<button aria-controls="feuille" aria-expanded="false" aria-haspopup="dialog" data-ouvre-feuille=""><svg viewbox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><span data-i18n="nav.plus">Plus</span></button>
 </nav>
-<div class="feuille" id="feuille"><div class="panneau">
-  <button class="fermer" data-ferme-feuille aria-label="Fermer">×</button>
-  <a href="../invites/index.html#rsvp">RSVP</a>
-  <a href="../invites/index.html#venir" data-i18n="invites.venir">Venir à Bunia</a>
-  <a href="../invites/index.html#tenues" data-i18n="invites.tenues">Tenues</a>
-  <a href="../invites/index.html#cadeaux" data-i18n="invites.cadeaux">Cadeaux</a>
-  <a href="../invites/index.html#table" data-i18n="invites.table">Ma table</a>
-  <a href="../invites/index.html#faq" data-i18n="invites.faq">Questions fréquentes</a>
-  <a href="../souvenirs/index.html" data-i18n="nav.souvenirs">Souvenirs</a>
+<div aria-hidden="true" aria-label="Navigation" aria-modal="true" class="feuille" id="feuille" role="dialog"><div class="panneau">
+<button aria-label="Fermer" class="fermer" data-ferme-feuille="">×</button>
+<a href="../invites/index.html#rsvp">RSVP</a>
+<a data-i18n="invites.venir" href="../invites/index.html#venir">Venir à Bunia</a>
+<a data-i18n="invites.tenues" href="../invites/index.html#tenues">Tenues</a>
+<a data-i18n="invites.cadeaux" href="../invites/index.html#cadeaux">Cadeaux</a>
+<a data-i18n="invites.table" href="../invites/index.html#table">Ma table</a>
+<a data-i18n="invites.faq" href="../invites/index.html#faq">Questions fréquentes</a>
+<a data-i18n="nav.souvenirs" href="../souvenirs/index.html">Souvenirs</a>
 </div></div>
-
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/pages.js"></script>
 </body>

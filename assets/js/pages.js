@@ -33,26 +33,34 @@
 
   /* ================= DIRECT ================= */
   if (page === "direct") {
-    var etat = el("direct-etat"), ecran = el("ecran"), titre = el("direct-titre");
-    var deb = window.bunia(S.diffusionDebut), fin = window.bunia(S.moments[1].fin), now = Date.now();
-    function idYT(u) { var m = (u || "").match(/(?:v=|youtu\.be\/|embed\/|live\/)([\w-]{6,})/); return m ? m[1] : ""; }
-    var id = idYT(S.youtube), apres = window.momentActuel() === "apres";
-    if (apres) {
-      etat.textContent = ""; titre.setAttribute("data-i18n", "direct.apres"); titre.textContent = window.t("direct.apres");
-      if (S.rediffusions.length) { ecran.innerHTML = ""; ecran.classList.add("cache"); el("rediff").innerHTML = S.rediffusions.map(function (r) { return "<a href='" + esc(r[1]) + "' target='_blank' rel='noopener'><span>" + esc(r[0]) + "</span><span>▶</span></a>"; }).join(""); el("rediff").classList.remove("cache"); }
-      else ecran.innerHTML = "<p class='attente'>Les vidéos seront publiées ici après le mariage.</p>";
-    } else if (now >= deb.getTime() && now <= fin.getTime() + 36e5 && id) {
-      etat.classList.add("live"); etat.textContent = window.t("direct.encours");
-      ecran.innerHTML = "<p class='attente'>Cérémonie religieuse · " + S.moments[1].debut + " – " + S.moments[1].fin + "</p><button class='bouton' id='lancer'>" + window.t("direct.lancer") + "</button>";
-      el("lancer").addEventListener("click", function () { ecran.innerHTML = "<iframe src='https://www.youtube.com/embed/" + id + "?autoplay=1' allow='autoplay; encrypted-media' allowfullscreen title='Diffusion en direct'></iframe>"; });
-    } else {
-      etat.textContent = window.t("direct.avant") + " " + S.diffusionDebut.replace(":", " h ") + ", " + window.t("direct.bunia");
-      var dc = document.createElement("div"); dc.className = "compte"; dc.id = "compte-direct"; ecran.innerHTML = ""; ecran.appendChild(dc);
-      (function tic() { var d = deb - Date.now(); if (d <= 0) { location.reload(); return; }
-        function pad(n) { return n < 10 ? "0" + n : n; }
-        dc.innerHTML = [["compte.jours", Math.floor(d / 864e5)], ["compte.heures", pad(Math.floor(d / 36e5) % 24)], ["compte.minutes", pad(Math.floor(d / 6e4) % 60)]].map(function (x) { return "<div><b>" + x[1] + "</b><span>" + window.t(x[0]) + "</span></div>"; }).join(""); setTimeout(tic, 1000); })();
+    var etat = el("direct-etat"), ecran = el("ecran"), titre = el("direct-titre"), lastState;
+    var id = (S.youtube || '').match(/(?:v=|youtu\.be\/|embed\/|live\/)([\w-]{6,})/);
+    function renderDirect() {
+      var now = Date.now(), begin = window.bunia(S.diffusionDebut).getTime(), end = window.bunia(S.moments[1].fin).getTime() + 36e5;
+      var state = window.momentActuel() === 'apres' ? 'apres' : now < begin ? 'avant' : now <= end && id ? 'live' : 'attente';
+      var key = state + window.langue();
+      if (key !== lastState) {
+        lastState = key; ecran.classList.remove('cache'); el('rediff').classList.add('cache');
+        etat.classList.toggle('live', state === 'live');
+        titre.textContent = window.t(state === 'apres' ? 'direct.apres' : 'direct.titre');
+        titre.setAttribute('data-i18n', state === 'apres' ? 'direct.apres' : 'direct.titre');
+        if (state === 'avant') {
+          etat.textContent = window.t('direct.avant') + ' ' + S.diffusionDebut.replace(':', ' h ') + ', ' + window.t('direct.bunia');
+          ecran.innerHTML = '<div class="compte" id="compte-direct"></div>';
+        } else if (state === 'live') {
+          etat.textContent = window.t('direct.encours');
+          ecran.innerHTML = '<button class="bouton" id="lancer">' + window.t('direct.lancer') + '</button>';
+          el('lancer').onclick = function () { ecran.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id[1] + '?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="' + window.t('direct.titre') + '"></iframe>'; };
+        } else if (state === 'apres' && S.rediffusions.length) {
+          etat.textContent = ''; ecran.classList.add('cache');
+          el('rediff').innerHTML = S.rediffusions.map(function (r) { return '<a href="' + esc(r[1]) + '" target="_blank" rel="noopener">' + esc(r[0]) + '<span>↗</span></a>'; }).join('');
+          el('rediff').classList.remove('cache');
+        } else { etat.textContent = ''; ecran.innerHTML = '<p class="attente">' + window.t(state === 'apres' ? 'direct.videos.pending' : 'direct.link.pending') + '</p>'; }
+      }
+      if (state === 'avant') window.afficherCompte(el('compte-direct'), begin, false);
     }
-    if (S.youtube) { el("ouvrir-yt").href = S.youtube; }
+    renderDirect(); setInterval(renderDirect, 1000); document.addEventListener('langue', renderDirect);
+    if (S.youtube) el('ouvrir-yt').href = S.youtube;
   }
 
   /* ================= ESPACE INVITÉS ================= */
@@ -60,43 +68,52 @@
     /* cartes → panneaux */
     var boutons = document.querySelectorAll(".cartes button");
     function ouvrir(id) {
+      if (!["rsvp","venir","tenues","table","cadeaux","faq"].includes(id)) id = "rsvp";
       boutons.forEach(function (b) { b.setAttribute("aria-expanded", b.getAttribute("data-panneau") === id); });
-      document.querySelectorAll(".panneau").forEach(function (p) { p.classList.toggle("on", p.id === "p-" + id); });
+      document.querySelectorAll(".panneaux .panneau").forEach(function (p) { p.classList.toggle("on", p.id === "p-" + id); });
       history.replaceState(null, "", "#" + id);
     }
     boutons.forEach(function (b) { b.addEventListener("click", function () { ouvrir(b.getAttribute("data-panneau")); document.getElementById("p-" + b.getAttribute("data-panneau")).scrollIntoView({ behavior: "smooth", block: "start" }); }); });
     ouvrir((location.hash || "#rsvp").slice(1));
+    window.addEventListener("hashchange", function () { ouvrir(location.hash.slice(1)); });
 
     /* RSVP */
-    var form = el("rsvpForm"), etatR = el("rsvpEtat");
-    var deja = localStorage.getItem("rsvp"); if (deja) { try { var o = JSON.parse(deja); etatR.textContent = "Réponse déjà envoyée pour " + o.nom + " (" + o.id + "). Vous pouvez la modifier ci-dessous."; form.nom.value = o.nom || ""; form.tel.value = o.tel || ""; } catch (e) { } }
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (form.site.value) return; /* piège anti-robot */
-      var d = new FormData(form), o = { type: "rsvp", id: (deja && JSON.parse(deja).id) || ("R" + Date.now().toString(36).toUpperCase()), date: new Date().toISOString() };
-      d.forEach(function (v, k) { if (k === "site") return; o[k] = o[k] ? o[k] + ", " + v : v; });
-      if (!o.nom || !o.nombre) { etatR.textContent = "Votre nom et le nombre de personnes nous manquent."; return; }
-      if (!o.moments) { etatR.textContent = "Cochez au moins un moment de la journée (ou « aucun » si vous ne pouvez pas venir)."; return; }
-      localStorage.setItem("rsvp", JSON.stringify({ id: o.id, nom: o.nom, tel: o.tel, date: o.date, envoye: false }));
-      etatR.textContent = "Envoi…";
+    var form = el('rsvpForm'), etatR = el('rsvpEtat'), saved = window.memoire.lire('rsvp');
+    if (saved) {
+      form.elements.nom.value = saved.nom || ''; form.elements.tel.value = saved.tel || '';
+      etatR.textContent = window.t(saved.envoye === true ? 'rsvp.previous' : 'rsvp.draft');
+    }
+    var sending = false;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); if (form.elements.site.value || sending || !form.reportValidity()) return;
+      var values = new FormData(form), moments = values.getAll('moments'), nombre = Number(values.get('nombre')), children = Number(values.get('enfants'));
+      if (!moments.length || (moments.includes('Aucun') && moments.length > 1)) { etatR.textContent = window.t('rsvp.choose'); return; }
+      if (!Number.isInteger(nombre) || !Number.isInteger(children) || children < 0 || children > nombre || (moments[0] === 'Aucun' ? nombre !== 0 : nombre < 1)) { etatR.textContent = window.t('rsvp.count.error'); return; }
+      var previous = window.memoire.lire('rsvp');
+      var o = { type:'rsvp', id: previous && previous.id || 'R' + (window.crypto.randomUUID ? window.crypto.randomUUID() : Date.now().toString(36)), date:new Date().toISOString() };
+      values.forEach(function (v,k) { if (k !== 'site' && k !== 'moments') o[k] = v; }); o.moments = moments.join(', ');
+      var record = { id:o.id,nom:o.nom,tel:o.tel,date:o.date,envoye:false };
+      var wa = el('rsvpWa');
+      if (wa && S.whatsapp) { wa.href = 'https://wa.me/' + S.whatsapp + '?text=' + encodeURIComponent('RSVP ' + o.id + ' — ' + o.nom + ', ' + o.nombre + ' personne(s), ' + o.moments + (o.message ? ' — ' + o.message : '')); }
+      // Preserve an acknowledged response while a proposed update is still pending.
+      if (!previous || previous.envoye !== true) window.memoire.ecrire('rsvp', record);
+      if (!S.appsScript) { etatR.textContent = window.t(S.whatsapp ? 'rsvp.whatsapp.ready' : 'rsvp.pending'); if (S.whatsapp) wa.classList.remove('cache'); return; }
+      sending = true; var button = form.querySelector('[type="submit"]'); button.disabled = true; etatR.textContent = window.t('sending');
       window.envoyerScript(o).then(function (r) {
-        if (r && r.ok) { localStorage.setItem("rsvp", JSON.stringify({ id: o.id, nom: o.nom, tel: o.tel, date: o.date, envoye: true })); etatR.textContent = "C'est noté, merci " + o.nom + " ! Référence " + o.id + "." + (r.doublon ? " (mise à jour de votre réponse précédente)" : ""); }
-        else throw new Error(r && r.erreur || "réponse inattendue");
-      }).catch(function (err) {
-        var wa = el("rsvpWa");
-        etatR.textContent = S.appsScript ? "L'envoi n'a pas abouti (" + err.message + "). Votre réponse est gardée sur ce téléphone : réessayez, ou envoyez-la sur WhatsApp." : "Le formulaire n'est pas encore activé : envoyez votre réponse sur WhatsApp.";
-        if (wa && S.whatsapp) { wa.href = "https://wa.me/" + S.whatsapp + "?text=" + encodeURIComponent("RSVP " + o.id + " — " + o.nom + ", " + o.nombre + " personne(s), " + o.moments + (o.message ? " — " + o.message : "")); wa.classList.remove("cache"); }
-      });
+        if (!r || !r.ok) throw new Error('not acknowledged');
+        record.envoye = true; window.memoire.ecrire('rsvp',record); etatR.textContent = window.t('rsvp.success') + ' ' + o.id;
+        wa.classList.add('cache');
+      }).catch(function () { etatR.textContent = window.t(S.whatsapp ? 'rsvp.failed.wa' : 'rsvp.failed'); if (S.whatsapp) wa.classList.remove('cache'); }).finally(function () { sending = false; button.disabled = false; });
     });
 
     /* ma table : par code d'invitation, via le script (jamais de liste complète dans le navigateur) */
     var ft = el("tableForm");
     ft.addEventListener("submit", function (e) {
-      e.preventDefault(); var code = ft.code.value.trim().toUpperCase(), r = el("resPlan");
-      if (code.length < 4) { r.textContent = "Entrez le code inscrit sur votre invitation."; return; }
-      r.textContent = "Recherche…";
-      window.lireScript({ type: "table", code: code }).then(function (j) { r.innerHTML = j && j.table ? esc(j.nom) + " — <b>" + esc(j.table) + "</b>" : "Code introuvable : présentez-vous à l'accueil, on vous attend."; })
-        .catch(function () { r.textContent = S.appsScript ? "Le plan de table n'est pas encore publié." : "Le plan de table sera publié la semaine du mariage."; });
+      e.preventDefault(); var code = ft.elements.code.value.trim().toUpperCase(), r = el("resPlan");
+      if (code.length < 4) { r.textContent = window.t("table.code.prompt"); return; }
+      r.textContent = window.t("table.searching");
+      window.lireScript({ type: "table", code: code }).then(function (j) { r.innerHTML = j && j.table ? esc(j.nom) + " — <b>" + esc(j.table) + "</b>" : window.t("table.notfound"); })
+        .catch(function () { r.textContent = window.t("table.pending"); });
     });
 
     /* FAQ */
@@ -117,12 +134,13 @@
     function afficher(list) { boite.innerHTML = list.map(function (m) { return "<div class='msg'><b>" + esc(m.nom) + "</b><p>" + esc(m.message) + "</p></div>"; }).join(""); }
     window.lireScript({ type: "livre" }).then(function (j) { if (j && j.length) afficher(j); }).catch(function () { });
     lf.addEventListener("submit", function (e) {
-      e.preventDefault(); if (lf.site.value) return;
-      var o = { type: "livre", nom: lf.nom.value.trim(), message: lf.message.value.trim(), date: new Date().toISOString() };
+      e.preventDefault(); if (lf.elements.site.value || !lf.reportValidity()) return;
+      var o = { type: "livre", nom: lf.elements.nom.value.trim(), message: lf.elements.message.value.trim(), date: new Date().toISOString() };
       if (!o.nom || !o.message) { le.textContent = "Votre nom et votre message nous manquent."; return; }
-      le.textContent = "Envoi…";
+      le.textContent = window.t("sending");
       window.envoyerScript(o).then(function (r) { if (r && r.ok) { le.textContent = window.t("livre.attente"); lf.reset(); } else throw new Error(); })
-        .catch(function () { le.textContent = S.appsScript ? "L'envoi n'a pas abouti : réessayez dans un instant." : "Le livre d'or sera ouvert très bientôt."; });
+        .catch(function () { le.textContent = window.t(S.appsScript ? "rsvp.failed" : "livre.pending"); });
     });
   }
+  window.appliquerLangue();
 })();
